@@ -213,6 +213,9 @@ class Graphe(object):
             res += str(arete) + " "
         return res
 
+#################################################
+##                  FONCTIONS                  ##
+#################################################
 
 def construireEchiquier():
     liste = {}
@@ -220,7 +223,7 @@ def construireEchiquier():
         liste[i]=[]
     return liste
 
-def reineMenacee(g : Graphe, pos : int ):
+def reineMenacee(g : Graphe,pos : int ):
     menace = False
     for i in g.all_sommets():
         if pos in g._graphe_dict[i]:
@@ -232,18 +235,28 @@ def placer(pos : int):
 
 def placerReines(g : Graphe):
     pos_reine=0
+    mat=[]
     for i in range(1,9):
-        pos_reine=random.randint(i*1,(i*8)+1)
-        menacee(pos_reine)
+        pos_reine=random.randint(1,8)
+        menacee=reineMenacee(g,pos_reine)
         while(menacee):
-            pos_reine=random.randint(i*1,(i*8)+1)
-            menacee(pos_reine)
+            pos_reine=random.randint(1,8)
+            menacee=reineMenacee(g,pos_reine)
+        ligne=[0]*8
+        ligne[pos_reine-1]=1
+        mat.append(ligne)
         placer(pos_reine)
+    return mat
 
+def afficher_mat(mat : list):
+    for i in mat:
+        print(i)
 
 #################################################
 ##            PROGRAMME PRINCIPAL              ##
 #################################################
 
-#g = construireEchiquier()
-#graphe = Graphe(g)
+g = construireEchiquier()
+graphe = Graphe(g)
+echiquier = placerReines(graphe)
+afficher_mat(echiquier)
