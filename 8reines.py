@@ -2,9 +2,8 @@
 
 import random
 
-# relier la reine à ses cases qu'elle menace
-# affichage de la matrice
-
+#relier la reine à ses cases qu'elle menace
+a
 """
 Une classe Python pour creer et manipuler des graphes
 """
@@ -250,8 +249,38 @@ def placerReines(g : Graphe):
     return mat
 
 def afficher_mat(mat : list):
-    for i in range(9):
-        pass
+    ligne=[]
+    for i in mat[0:7]:
+        ligne.append(i)
+    print(ligne)
+    ligne=[]
+    for i in mat[8:15]:
+        ligne.append(i)
+    print(ligne)
+    ligne=[]
+    for i in mat[16:23]:
+        ligne.append(i)
+    print(ligne)
+    ligne=[]
+    for i in mat[24:31]:
+        ligne.append(i)
+    print(ligne)
+    ligne=[]
+    for i in mat[32:39]:
+        ligne.append(i)
+    print(ligne)
+    ligne=[]
+    for i in mat[40:47]:
+        ligne.append(i)
+    print(ligne)
+    ligne=[]
+    for i in mat[48:55]:
+        ligne.append(i)
+    print(ligne)
+    ligne=[]
+    for i in mat[56:63]:
+        ligne.append(i)
+    print(ligne)
 
 #################################################
 ##            PROGRAMME PRINCIPAL              ##
