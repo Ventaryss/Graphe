@@ -2,58 +2,34 @@
 
 import random
 
-"""
-Une classe Python pour creer et manipuler des graphes
-"""
-
 class Graphe(object):
     def __init__(self, graphe_dict=None):
-        """ initialise un objet graphe.
-            Si aucun dictionnaire n'est
-            créé ou donné, on en utilisera un vide
-        """
         if graphe_dict == None:
             graphe_dict = {}
         self._graphe_dict = graphe_dict
 
     def aretes(self, sommet):
-        """ retourne une liste de toutes les aretes d'un sommet """
         if ((sommet in self._graphe_dict)==True):
             return self._graphe_dict[sommet]
         else:
             return "Erreur, le sommet n'est pas dans le graphe"
 
     def all_sommets(self):
-        """ retourne tous les sommets du graphe """
         liste_sommets=[]
         for s in (self._graphe_dict.keys()):
             liste_sommets.append(s)
         return liste_sommets
 
     def all_aretes(self):
-        """ retourne toutes les aretes du graphe
-        à partir de la méthode privée,_list_aretes, à définir
-        plus bas.
-        Ici on fera donc simplement appel à cette méthode.
-        """
         return self.__list_aretes()
 
     def add_sommet(self, sommet):
-        """ Si le "sommet" n'est pas déjà présent
-        dans le graphe, on rajoute au dictionnaire
-        une clé "sommet" avec une liste vide pour valeur.
-        Sinon on ne fait rien.
-        """
         if sommet not in self._graphe_dict:
             self._graphe_dict[sommet]=set()
         else:
             print("Le sommet est déjà dans le graphe")
 
     def add_arete(self, arete):
-        """ l'arete est de type set, tuple ou list;
-        Entre deux sommets il peut y avoir plus
-        d'une arete (multi-graphe)
-        """
         if arete[0] not in self._graphe_dict or arete[1] not in self._graphe_dict:
             print("erreur, un des deux sommets n'est pas dans le graphe")
         else:
@@ -62,10 +38,6 @@ class Graphe(object):
 
 
     def __list_aretes(self):
-        """ Methode privée pour récupérers les aretes.
-        Une arete est un ensemble (set)
-        avec un (boucle) ou deux sommets.
-        """
         liste=set()
         for i in self._graphe_dict:
             if self._graphe_dict[i]=={}:
@@ -91,11 +63,9 @@ class Graphe(object):
         return []
 
     def sommet_degre(self,sommet):
-        """ renvoie le degre du sommet """
         return len(self._graphe_dict[sommet])
 
     def trouve_sommet_isole(self):
-        """ renvoie la liste des sommets isoles """
         isoles=[]
         for  i in self._graphe_dict.keys():
             if  self.sommet_degre(i)==0:
@@ -103,9 +73,6 @@ class Graphe(object):
         return isoles
 
     def list_degres(self):
-        """ calcule tous les degres et renvoie un
-        tuple de degres decroissant
-        """
         degres=[]
         for i in self._graphe_dict.keys():
             degres.append(self.sommet_degre(i))
@@ -113,10 +80,6 @@ class Graphe(object):
         return tuple(degres)
 
     def parcours_largeur(self, sommet_depart: str) -> list:
-        """ Parcours en largeur du graphe
-            @param : sommet de départ
-            return : liste des sommets dans l'ordre du  parcours
-        """
         f=[]
         f.append(sommet_depart)
         marque = [sommet_depart]
@@ -137,10 +100,6 @@ class Graphe(object):
         return resultat
 
     def parcours_profondeur(self, sommet_depart: str) -> list:
-        """ Parcours en profondeur du graphe
-            @param : sommet de départ
-            return : liste des sommets dans l'ordre du  parcours
-        """
         p = []
         p.append(sommet_depart)
         marque=[sommet_depart]
@@ -196,12 +155,10 @@ class Graphe(object):
         return False
 
     def __iter__(self):
-        """ on crée un itérable à partir du graphe"""
         self._iter_obj = iter(self._graphe_dict)
         return self._iter_obj
 
     def __next__(self):
-        """ Pour itérer sur les sommets du graphe """
         return next(self._iter_obj)
 
     def __str__(self):
