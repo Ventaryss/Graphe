@@ -220,7 +220,7 @@ def construireEchiquier():
         liste[i]=[]
     return liste
 
-def reineMenacee(g : Graphe,pos : int ):
+def reineMenacee(g : Graphe, pos : int ):
     menace = False
     for i in g.all_sommets():
         if pos in g._graphe_dict[i]:
