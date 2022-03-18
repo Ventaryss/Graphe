@@ -1,5 +1,3 @@
-# Créé par vince, le 16/03/2022 en Python 3.7
-
 import random
 
 #relier la reine à ses cases qu'elle menace
@@ -222,7 +220,7 @@ class Graphe(object):
 def construireEchiquier(d : int):
     liste = {}
     for i in range (d**2):
-        liste[i]=[]
+        liste[i]=set()
     return liste
 
 def reineMenacee(g : Graphe, pos : int):
@@ -232,7 +230,24 @@ def reineMenacee(g : Graphe, pos : int):
             menace=True
     return menace
 
-def menacee(pos : int, d : int):
+def placer(g : Graphe, d : int, m :list, pos : int):
+    reliees=[]
+    haut = pos-d
+    bas = pos+d
+    gauche = pos-1
+    droite = pos+1
+    diag1 = pos-d-1
+    diag2 = pos-d+1
+    diag3 = pos+d-1
+    diag4 = pos+d+1
+
+    while(bas<d**2):
+        bas=bas
+
+    for i in reliees:
+        g.add_arete(pos,i)
+
+def Menacee(pos : int, d : int) -> list :
     pos1 = pos
     pos2 = pos
     pos3 = pos
@@ -266,13 +281,11 @@ def menacee(pos : int, d : int):
     while (pos8%d!=0):
         marque.append(pos8-7)
         pos8-=7
-        
     return marque
-        
-    
 
 def placerReines(g : Graphe, d : int):
     pos_reine=0
+    liste=[]
     mat=[0]*(d**2)
     for i in range(d):
         pos_reine=random.randint(1,d**2)
@@ -281,7 +294,9 @@ def placerReines(g : Graphe, d : int):
             pos_reine=random.randint(1,d**2)
             menacee=reineMenacee(g,pos_reine)
         mat[pos_reine-1]=1
-        placer(pos_reine)
+        liste=Menacee(pos_reine,d)
+        for j in liste:
+            g.add_arete([j,pos_reine])
     return mat
 
 def afficher_mat(mat : list, d : int):
