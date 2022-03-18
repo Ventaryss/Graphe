@@ -3,7 +3,7 @@
 import random
 
 #relier la reine à ses cases qu'elle menace
-a
+
 """
 Une classe Python pour creer et manipuler des graphes
 """
@@ -250,35 +250,35 @@ def placerReines(g : Graphe):
 
 def afficher_mat(mat : list):
     ligne=[]
-    for i in mat[0:7]:
+    for i in mat[0:8]:
         ligne.append(i)
     print(ligne)
     ligne=[]
-    for i in mat[8:15]:
+    for i in mat[8:16]:
         ligne.append(i)
     print(ligne)
     ligne=[]
-    for i in mat[16:23]:
+    for i in mat[16:24]:
         ligne.append(i)
     print(ligne)
     ligne=[]
-    for i in mat[24:31]:
+    for i in mat[24:32]:
         ligne.append(i)
     print(ligne)
     ligne=[]
-    for i in mat[32:39]:
+    for i in mat[32:40]:
         ligne.append(i)
     print(ligne)
     ligne=[]
-    for i in mat[40:47]:
+    for i in mat[40:48]:
         ligne.append(i)
     print(ligne)
     ligne=[]
-    for i in mat[48:55]:
+    for i in mat[48:56]:
         ligne.append(i)
     print(ligne)
     ligne=[]
-    for i in mat[56:63]:
+    for i in mat[56:64]:
         ligne.append(i)
     print(ligne)
 
