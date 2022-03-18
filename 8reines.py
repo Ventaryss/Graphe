@@ -232,8 +232,44 @@ def reineMenacee(g : Graphe,pos : int ):
             menace=True
     return menace
 
-def placer(pos : int):
-    pass
+def menacee(pos : int, d : int):
+    pos1 = pos
+    pos2 = pos
+    pos3 = pos
+    pos4 = pos
+    pos5 = pos
+    pos6 = pos
+    pos7 = pos
+    pos8 = pos
+    marque=[]
+    while (pos1>0):
+        marque.append(pos1-8)
+        pos1=pos1-8
+    while (pos2<=63):
+        marque.append(pos2+8)
+        pos2=pos2+8
+    while (pos3%d!=0):
+        marque.append(pos3-1)
+        pos3-=1
+    while (pos4%d!=0):
+        marque.append(pos4+1)
+        pos4+=1
+    while (pos5%d!=0):
+        marque.append(pos5+9)
+        pos5+=9
+    while (pos6%d!=0):
+        marque.append(pos6-9)
+        pos6-=9
+    while (pos7%d!=0):
+        marque.append(pos7+7)
+        pos7+=7
+    while (pos8%d!=0):
+        marque.append(pos8-7)
+        pos8-=7
+        
+    return marque
+        
+    
 
 def placerReines(g : Graphe):
     pos_reine=0
