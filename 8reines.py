@@ -236,10 +236,10 @@ def placer(g : Graphe, d : int, m :list, pos : int):
     bas = pos+d
     gauche = pos-1
     droite = pos+1
-    diag1 = pos-d-1
-    diag2 = pos-d+1
-    diag3 = pos+d-1
-    diag4 = pos+d+1
+    diag1 = pos-d-1 #haut gauche
+    diag2 = pos-d+1 #haut droite
+    diag3 = pos+d-1 #bas gauche
+    diag4 = pos+d+1 #bas droite
 
     while(bas<d**2):
         reliees.append(bas)
@@ -247,7 +247,7 @@ def placer(g : Graphe, d : int, m :list, pos : int):
     while(haut>0):
         reliees.append(haut)
         haut-=d
-    while()
+    while():
 
 
     for i in reliees:
