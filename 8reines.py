@@ -230,28 +230,44 @@ def reineMenacee(g : Graphe, pos : int):
             menace=True
     return menace
 
-def placer(g : Graphe, d : int, m :list, pos : int):
+def placer(g : Graphe, d : int, pos : int):
     reliees=[]
     haut = pos-d
     bas = pos+d
     gauche = pos-1
     droite = pos+1
-    diag1 = pos-d-1 #haut gauche
-    diag2 = pos-d+1 #haut droite
-    diag3 = pos+d-1 #bas gauche
-    diag4 = pos+d+1 #bas droite
+    diag1 = pos-d-1
+    diag2 = pos-d+1
+    diag3 = pos+d-1
+    diag4 = pos+d+1
 
-    while(bas<d**2):
+    while(bas<=d**2):
         reliees.append(bas)
         bas+=d
-    while(haut>0):
+    while(haut>=0):
         reliees.append(haut)
         haut-=d
+    while((gauche-1)%d!=0):
+        reliees.append(gauche)
+        gauche-=1
+    while(droite%d!=0)and():
+        reliees.append(droite)
+        droite+=1
     while():
-
+        reliees.append(diag1)
+        diag1=diag1-d-1
+    while():
+        reliees.append(diag2)
+        diag2=diag2-d+1
+    while():
+        reliees.append(diag3)
+        diag3=diag3+d-1
+    while():
+        reliees.append(diag4)
+        diag4=diag4+d+1
 
     for i in reliees:
-        g.add_arete(pos,i)
+        g.add_arete([pos,i])
 
 def Menacee(pos : int, d : int) -> list :
     pos1 = pos
@@ -300,7 +316,7 @@ def placerReines(g : Graphe, d : int):
             pos_reine=random.randint(1,d**2)
             menacee=reineMenacee(g,pos_reine)
         mat[pos_reine-1]=1
-        liste=Menacee(pos_reine,d)
+        placer(g,d,pos_reine)
     return mat
 
 def afficher_mat(mat : list, d : int):
@@ -316,3 +332,5 @@ def afficher_mat(mat : list, d : int):
 dim = int(input("Entrez la dimension de l'échiquier : "))
 g = construireEchiquier(dim)
 graphe = Graphe(g)
+echiq=placerReines(graphe,dim)
+afficher_mat(echiq,dim)
