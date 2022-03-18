@@ -219,13 +219,13 @@ class Graphe(object):
 ##                  FONCTIONS                  ##
 #################################################
 
-def construireEchiquier():
+def construireEchiquier(d : int):
     liste = {}
-    for i in range (1,65):
+    for i in range (d**2):
         liste[i]=[]
     return liste
 
-def reineMenacee(g : Graphe,pos : int ):
+def reineMenacee(g : Graphe, pos : int):
     menace = False
     for i in g.all_sommets():
         if pos in g._graphe_dict[i]:
@@ -271,58 +271,31 @@ def menacee(pos : int, d : int):
         
     
 
-def placerReines(g : Graphe):
+def placerReines(g : Graphe, d : int):
     pos_reine=0
-    mat=[0]*64
-    for i in range(1,9):
-        pos_reine=random.randint(1,64)
+    mat=[0]*(d**2)
+    for i in range(d):
+        pos_reine=random.randint(1,d**2)
         menacee=reineMenacee(g,pos_reine)
         while(menacee):
-            pos_reine=random.randint(1,64)
+            pos_reine=random.randint(1,d**2)
             menacee=reineMenacee(g,pos_reine)
         mat[pos_reine-1]=1
         placer(pos_reine)
     return mat
 
-def afficher_mat(mat : list):
-    ligne=[]
-    for i in mat[0:8]:
-        ligne.append(i)
-    print(ligne)
-    ligne=[]
-    for i in mat[8:16]:
-        ligne.append(i)
-    print(ligne)
-    ligne=[]
-    for i in mat[16:24]:
-        ligne.append(i)
-    print(ligne)
-    ligne=[]
-    for i in mat[24:32]:
-        ligne.append(i)
-    print(ligne)
-    ligne=[]
-    for i in mat[32:40]:
-        ligne.append(i)
-    print(ligne)
-    ligne=[]
-    for i in mat[40:48]:
-        ligne.append(i)
-    print(ligne)
-    ligne=[]
-    for i in mat[48:56]:
-        ligne.append(i)
-    print(ligne)
-    ligne=[]
-    for i in mat[56:64]:
-        ligne.append(i)
-    print(ligne)
+def afficher_mat(mat : list, d : int):
+    for i in range(d):
+        ligne=[]
+        for j in mat[i*d:(i+1)*d]:
+            ligne.append(j)
+        print(ligne)
 
 #################################################
 ##            PROGRAMME PRINCIPAL              ##
 #################################################
-
-g = construireEchiquier()
+dim = int(input("Entrez la dimension de l'échiquier : "))
+g = construireEchiquier(dim)
 graphe = Graphe(g)
-echiquier = placerReines(graphe)
-afficher_mat(echiquier)
+echiquier = placerReines(graphe,dim)
+afficher_mat(echiquier,dim)
