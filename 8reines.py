@@ -218,12 +218,24 @@ class Graphe(object):
 #################################################
 
 def construireEchiquier(d : int):
+    """
+        fonction qui retourne une liste d'adjadence
+        de l'échiquier de dimension d*d passée en paramètre avec
+        les sommets représentant les cases, les sommets ne
+        sont pas reliés au début
+    """
     liste = {}
     for i in range (d**2):
         liste[i]=set()
     return liste
 
 def reineMenacee(g : Graphe, pos : int):
+    """
+        fonction qui renvoie un booléen en fonction de si la
+        position de la reine passée en paramètre est menacée
+        par une autre, pour cela on s'aide du graphe : si le
+        sommet n'est relié à aucun autre, il n'est pas menacé
+    """
     menace = False
     for i in g.all_sommets():
         if pos in g._graphe_dict[i]:
@@ -231,6 +243,10 @@ def reineMenacee(g : Graphe, pos : int):
     return menace
 
 def placer(g : Graphe, d : int, pos : int):
+    """
+        fonction qui relie les sommets des cases menacées
+        par la reine dont la position est passée en paramètre
+    """
     reliees=[]
     haut = pos-d
     bas = pos+d
@@ -306,20 +322,32 @@ def Menacee(pos : int, d : int) -> list :
     return marque
 
 def placerReines(g : Graphe, d : int):
+    """
+        fonciton principale qui place les d reines
+        qui retourne la matrice simulant l'échiquier avec
+        les d reines placées
+    """
     pos_reine=0
-    liste=[]
-    mat=[0]*(d**2)
-    for i in range(d):
-        pos_reine=random.randint(1,d**2)
+    mat=[0]*(d**2)  # liste des d² cases initialisées à 0
+    for i in range(1,d+1):
+        essais=0        # compteur d'essais pour placer la reine
+        pos_reine=random.randint(0,d**2)    # l'ordinateur sort un entier aléatoire entre 0 et d²
+        essais+=1
         menacee=reineMenacee(g,pos_reine)
         while(menacee):
-            pos_reine=random.randint(1,d**2)
+            pos_reine=random.randint(0,d**2)
+            essais+=1
             menacee=reineMenacee(g,pos_reine)
         mat[pos_reine-1]=1
         placer(g,d,pos_reine)
+        print("Reine n°",i," placée en ",essais," essais")  # message indiquant le nombre d'essais pour placer la reine
     return mat
 
 def afficher_mat(mat : list, d : int):
+    """
+        fonction pour afficher une matrice
+        de dimension d*d
+    """
     for i in range(d):
         ligne=[]
         for j in mat[i*d:(i+1)*d]:
@@ -329,8 +357,9 @@ def afficher_mat(mat : list, d : int):
 #################################################
 ##            PROGRAMME PRINCIPAL              ##
 #################################################
-dim = int(input("Entrez la dimension de l'échiquier : "))
-g = construireEchiquier(dim)
-graphe = Graphe(g)
-echiq=placerReines(graphe,dim)
+
+dim = int(input("Entrez la dimension de l'échiquier : "))   # on demande la dimension de l'échiquier
+g = construireEchiquier(dim)    # on construit la liste d'adjacence
+graphe = Graphe(g)              # on instance l'objet graphe
+echiq=placerReines(graphe,dim)  # on affecte l'échiquier rempli dans une variable
 afficher_mat(echiq,dim)
