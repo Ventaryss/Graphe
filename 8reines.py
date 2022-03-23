@@ -54,8 +54,10 @@ class Graphe(object):
         Entre deux sommets il peut y avoir plus
         d'une arete (multi-graphe)
         """
-        if arete[0] not in self._graphe_dict or arete[1] not in self._graphe_dict:
-            print("erreur, un des deux sommets n'est pas dans le graphe")
+        if arete[0] not in self._graphe_dict :
+            print("erreur,",arete[0]," n'est pas dans le graphe")
+        elif arete[1] not in self._graphe_dict:
+            print("erreur,",arete[1]," n'est pas dans le graphe")
         else:
             self._graphe_dict[arete[0]].add(arete[1])
             self._graphe_dict[arete[1]].add(arete[0])
@@ -112,29 +114,6 @@ class Graphe(object):
         degres.sort(reverse=True)
         return tuple(degres)
 
-    def parcours_largeur(self, sommet_depart: str) -> list:
-        """ Parcours en largeur du graphe
-            @param : sommet de départ
-            return : liste des sommets dans l'ordre du  parcours
-        """
-        f=[]
-        f.append(sommet_depart)
-        marque = [sommet_depart]
-        resultat = Graphe()
-        resultat.add_sommet(sommet_depart)
-
-        while f != []:
-            sommet_courant = f.pop(0)
-            if sommet_courant not in marque:
-                resultat.add_sommet(sommet_courant)
-
-            for v in self._graphe_dict[sommet_courant]:
-                if v not in marque:
-                    marque.append(v)
-                    f.append(v)
-                    resultat.add_sommet(v)
-                    resultat.add_arete([sommet_courant,v])
-        return resultat
 
     def parcours_profondeur(self, sommet_depart: str) -> list:
         """ Parcours en profondeur du graphe
@@ -160,40 +139,14 @@ class Graphe(object):
                     resultat.add_arete([sommet_courant,v])
         return resultat
 
-    def presence_cycle(self,sommet_depart):
-        p = []
-        p.append(sommet_depart)
-        parent={}
-        parent[sommet_depart] = ""
-
-        while p != []:
-            sommet_courant = p.pop(len(p)-1)
-            for v in self._graphe_dict[sommet_courant]:
-                if v != parent[sommet_courant]:
-                    if v in parent:
-                        return True
-                    else:
-                        parent[v]=sommet_courant
-                        p.append(v)
-        return False
-
-    def presence_cycle_depart(self,sommet_depart):
-        p = []
-        p.append(sommet_depart)
-        parent={}
-        parent[sommet_depart] = ""
-
-        while p != []:
-            sommet_courant = p.pop(len(p)-1)
-            for v in self._graphe_dict[sommet_courant]:
-                if v != parent[sommet_courant]:
-                    if v in parent:
-                        if sommet_depart == parent[v]:
-                            return True
-                    else:
-                        parent[v]=sommet_courant
-                        p.append(v)
-        return False
+    def connexe (self):
+        liste_sommets = []
+        for i in self._graphe_dict.keys():
+            liste_sommets.append(i)
+        for i in liste_sommets:
+            if i not in self.parcours_profondeur(liste_sommets[0]):
+                return False
+        return True
 
     def __iter__(self):
         """ on crée un itérable à partir du graphe"""
@@ -225,7 +178,7 @@ def construireEchiquier(d : int):
         sont pas reliés au début
     """
     liste = {}
-    for i in range (d**2):
+    for i in range (1,d**2+1):
         liste[i]=set()
     return liste
 
@@ -260,66 +213,30 @@ def placer(g : Graphe, d : int, pos : int):
     while(bas<=d**2):
         reliees.append(bas)
         bas+=d
-    while(haut>=0):
+    while(haut>0):
         reliees.append(haut)
         haut-=d
-    while((gauche-1)%d!=0):
+    while((gauche)%d!=0):
         reliees.append(gauche)
         gauche-=1
-    while(droite%d!=0)and():
+    while((droite-1)%d!=0):
         reliees.append(droite)
         droite+=1
-    while():
+    while(diag1>0 and (diag1)%d!=0):
         reliees.append(diag1)
         diag1=diag1-d-1
-    while():
+    while(diag2>0 and (diag2-1)%d!=0):
         reliees.append(diag2)
         diag2=diag2-d+1
-    while():
+    while(diag3<=d**2 and (diag3)%d!=0):
         reliees.append(diag3)
         diag3=diag3+d-1
-    while():
+    while(diag4<=d**2 and (diag4-1)%d!=0):
         reliees.append(diag4)
         diag4=diag4+d+1
 
     for i in reliees:
         g.add_arete([pos,i])
-
-def Menacee(pos : int, d : int) -> list :
-    pos1 = pos
-    pos2 = pos
-    pos3 = pos
-    pos4 = pos
-    pos5 = pos
-    pos6 = pos
-    pos7 = pos
-    pos8 = pos
-    marque=[]
-    while (pos1>0):
-        marque.append(pos1-8)
-        pos1=pos1-8
-    while (pos2<=63):
-        marque.append(pos2+8)
-        pos2=pos2+8
-    while (pos3%d!=0):
-        marque.append(pos3-1)
-        pos3-=1
-    while (pos4%d!=0):
-        marque.append(pos4+1)
-        pos4+=1
-    while (pos5%d!=0):
-        marque.append(pos5+9)
-        pos5+=9
-    while (pos6%d!=0):
-        marque.append(pos6-9)
-        pos6-=9
-    while (pos7%d!=0):
-        marque.append(pos7+7)
-        pos7+=7
-    while (pos8%d!=0):
-        marque.append(pos8-7)
-        pos8-=7
-    return marque
 
 def placerReines(g : Graphe, d : int):
     """
@@ -330,12 +247,14 @@ def placerReines(g : Graphe, d : int):
     pos_reine=0
     mat=[0]*(d**2)  # liste des d² cases initialisées à 0
     for i in range(1,d+1):
+        if (g.connexe()==True):    # condition d'arrêt : si tous les cases sont menacées, alors on ne peut plus placer de reine
+            return mat
         essais=0        # compteur d'essais pour placer la reine
-        pos_reine=random.randint(0,d**2)    # l'ordinateur sort un entier aléatoire entre 0 et d²
+        pos_reine=random.randint(1,d**2)    # l'ordinateur sort un entier aléatoire entre 0 et d²
         essais+=1
         menacee=reineMenacee(g,pos_reine)
         while(menacee):
-            pos_reine=random.randint(0,d**2)
+            pos_reine=random.randint(1,d**2)
             essais+=1
             menacee=reineMenacee(g,pos_reine)
         mat[pos_reine-1]=1
