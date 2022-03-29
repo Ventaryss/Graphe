@@ -248,6 +248,7 @@ def placerReines(g : Graphe, d : int):
     mat=[0]*(d**2)  # liste des d² cases initialisées à 0
     for i in range(1,d+1):
         if (g.connexe()==True):    # condition d'arrêt : si tous les cases sont menacées, alors on ne peut plus placer de reine
+            print("Cas Impossible :")
             return mat
         essais=0        # compteur d'essais pour placer la reine
         pos_reine=random.randint(1,d**2)    # l'ordinateur sort un entier aléatoire entre 0 et d²
@@ -257,9 +258,9 @@ def placerReines(g : Graphe, d : int):
             pos_reine=random.randint(1,d**2)
             essais+=1
             menacee=reineMenacee(g,pos_reine)
-        mat[pos_reine-1]=1
+        mat[pos_reine-1]=i
         placer(g,d,pos_reine)
-        print("Reine n°",i," placée en ",essais," essais")  # message indiquant le nombre d'essais pour placer la reine
+        print("Reine n°",i," placée en ",pos_reine,"et en",essais ,"essais")  # message indiquant le nombre d'essais pour placer la reine
     return mat
 
 def afficher_mat(mat : list, d : int):
